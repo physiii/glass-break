@@ -207,15 +207,10 @@ Wire Wire Line
 	7650 4000 7350 4000
 Wire Wire Line
 	7350 3850 7350 4300
-Wire Wire Line
-	7350 3300 7350 3550
 Connection ~ 7350 3350
 Wire Wire Line
 	7050 3150 7400 3150
-Wire Wire Line
-	7350 2850 7350 3350
 Connection ~ 7350 4000
-Connection ~ 7350 3150
 Wire Wire Line
 	7350 2550 7350 2350
 Connection ~ 6250 3250
@@ -224,7 +219,7 @@ L admp401 U2?
 U 1 1 56909458
 P 8650 3150
 F 0 "U2?" H 8650 3150 60  0000 C CNN
-F 1 "admp401" H 8650 3150 60  0000 C CNN
+F 1 "admp401" H 8650 2700 60  0000 C CNN
 F 2 "" H 8650 3150 60  0000 C CNN
 F 3 "" H 8650 3150 60  0000 C CNN
 	1    8650 3150
@@ -267,8 +262,6 @@ F 3 "" H 6850 3950 50  0000 C CNN
 	1    6850 3950
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	8200 3150 8100 3150
 Wire Wire Line
 	9150 2850 9500 2850
 Wire Wire Line
@@ -313,4 +306,8 @@ Connection ~ 7100 3150
 Wire Wire Line
 	6800 1700 7100 1700
 Connection ~ 7100 2050
+Wire Wire Line
+	8200 3150 8100 3150
+Wire Wire Line
+	7350 2850 7350 3550
 $EndSCHEMATC
