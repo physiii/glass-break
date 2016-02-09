@@ -226,7 +226,7 @@ void scan() {
     for (int i = 0; i < n; ++i)
     {
       //char ssid[50] = "";
-      strcpy(ssid,WiFi.SSID(i));
+      strcpy(ssid,WiFi.SSID(i).c_str());
       strcat(html,"<option value='");
       strcat(html,ssid);
       strcat(html,"'>");
