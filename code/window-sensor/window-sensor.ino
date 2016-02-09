@@ -45,10 +45,17 @@ const char *ap_password = "password";
 char html[5000] = "";
 bool scan_complete = false;
 bool ap_started = false;
+bool connect_to_ap = false;
 const int led = 13;
 int address = 0;
+int ssid_ptr = 0;
+int password_addr = 0;
 byte value;
-
+char new_ssid[50] = "";
+char ssid[sizeof(new_ssid)] = "";  
+char new_password[50] = "";
+char password[sizeof(new_password)] = "";  
+  
 ESP8266WebServer server(80);
 
 /* Just a little test message.  Go to http://192.168.4.1 in a web browser
@@ -125,8 +132,6 @@ void get_input_data(){
 }
 
 void store_wifi() {
-  char ssid[100] = "";
-  char new_ssid[100] = "";
   char new_password[100] = "";
   char html2[500] = "";
   strcpy(new_ssid,server.arg(0).c_str());
@@ -141,41 +146,50 @@ void store_wifi() {
   strcat(html2,") and password (");
   strcat(html2,new_password);
   strcat(html2,")");
-  //snprintf(html2, 400, server.arg(0));
+
   server.send(200, "text/html",html2);
-  //for(int x=0; x < 100; x++)
-  //{
-  //EEPROM.write(addr,ssid[addr]);
-  EEPROM.write(0,'h');
-  EEPROM.write(1,'e');
-  EEPROM.write(2,'l');
-  EEPROM.write(3,'l');
-  EEPROM.write(4,'o');
-  EEPROM.write(5,'!');
-  EEPROM.write(6,'\\');
-  EEPROM.write(7,'n'); 
 
-  for (int i = *ssid; i < sizeof(ssid) ; i++){
-    Serial.print(ssid[i-*ssid]);
-    Serial.print(" (loop) ");
-    EEPROM.write(i-*ssid,ssid[i-*ssid]);    
-    if (ssid[i-*ssid] == '\n'){
-        Serial.println("!! end of line !!");
-        strcpy(new_ssid,ssid);
-        Serial.println(new_ssid);
+  int j = 0;
+  int i = 0;
+  ssid_ptr = 0;
+
+  for (int i = 0; i < 100; i++) //clear some memory
+    EEPROM.write(i, 0);
+  
+  for (i = 0; i < sizeof(new_ssid) ; i++){
+    if (new_ssid[i]) {
+      Serial.print(" (loop) ");
+      Serial.print(i);
+      Serial.print(" ");
+      Serial.println(new_ssid[i]);
+      EEPROM.write(i,new_ssid[i]);      
+    } else {
+      j = i;
+      i = sizeof(new_ssid);          
     }
-      
   }
-
-  //}
-
-  addr = addr + 1;
-  if (addr == 100)
-  {
-    addr = 0;
-    EEPROM.commit();
+  Serial.print(" (adding) ");
+  Serial.print(j);
+  Serial.println(" null ");
+  EEPROM.write(j,0);
+  j++;
+  for (i = 0; i < sizeof(new_password) ; i++,j++){
+    if (new_password[i]) {
+      Serial.print(" (loop) ");
+      Serial.print(j);
+      Serial.print(" ");
+      Serial.println(new_password[i]);
+      EEPROM.write(j,new_password[i]);       
+    } else {
+      i = sizeof(new_password);
+    }
   }
+  Serial.print(" (adding) ");
+  Serial.print(j);
+  Serial.println(" null ");
+  EEPROM.write(j,0);
   EEPROM.commit();
+  Serial.println((char)EEPROM.read(j+1));
 }
 
 void start_ap() {
@@ -194,66 +208,12 @@ void start_ap() {
   server.onNotFound ( handleNotFound );
   server.begin();
   Serial.print("gui access on http://");
-  Serial.print(myIP);
-  Serial.println();
-}
-
-void get_wifi_info(){
-  Serial.println("checking wifi info | ");
-  char c0 = (char)EEPROM.read(0);
-  char c1 = (char)EEPROM.read(1);
-  char c2 = (char)EEPROM.read(2);
-  char c3 = (char)EEPROM.read(3);
-  char c4 = (char)EEPROM.read(4);
-  char c5 = (char)EEPROM.read(5);
-  char c6 = (char)EEPROM.read(6);
-  char c7 = (char)EEPROM.read(7);
-  
-  char ssid_string[50] = "";
-  ssid_string[0] = c0;
-  ssid_string[1] = c1;
-  ssid_string[2] = c2;
-  ssid_string[3] = c3;
-  ssid_string[4] = c4;
-  ssid_string[5] = c5;
-  ssid_string[6] = c6;
-  ssid_string[7] = c7;
-    
-  Serial.print(c0);
-  Serial.print(" ");
-  Serial.print(c1);
-  Serial.print(" ");
-  Serial.print(c2);
-  Serial.print(" ");
-  Serial.print(c3);
-  Serial.print(" ");
-  Serial.print(c4);
-  Serial.print(" ");
-  Serial.print(c5);
-  Serial.print(" ");
-  Serial.print(c6);
-  Serial.print(" ");
-  Serial.print(c7);    
-  Serial.println();
-  
-  if (c6 == '\\'){
-    if (c7 == 'n'){
-      Serial.println("end of line");  
-    }
-  }
-  // advance to the next address of the EEPROM
-  address = address + 1;
-  // there are only 512 bytes of EEPROM, from 0 to 511, so if we're
-  // on address 512, wrap around to address 0
-  if (address == 100)
-    address = 0;
+  Serial.println(myIP);
 }
 
 void scan() {
-  Serial.println("scan start");
   // WiFi.scanNetworks will return the number of networks found
   int n = WiFi.scanNetworks();
-  Serial.println("scan done");
   scan_complete = true;
   strcat(html,"<form action='/store_wifi' method='get'>");
   strcat(html,"<select name='ssid'>");
@@ -265,8 +225,8 @@ void scan() {
     Serial.println(" networks found");
     for (int i = 0; i < n; ++i)
     {
-      char ssid[100] = "";
-      strcpy(ssid,WiFi.SSID(i).c_str());
+      //char ssid[50] = "";
+      strcpy(ssid,WiFi.SSID(i));
       strcat(html,"<option value='");
       strcat(html,ssid);
       strcat(html,"'>");
@@ -285,7 +245,83 @@ void scan() {
   strcat(html,"</select><br>");
   strcat(html,"<input name='password' type='text' placeholder='password'></input><br>");
   strcat(html,"<input type='submit' value='Submit'></button></form>");
-  Serial.println(html);
+  //Serial.println(html);
+  start_ap();
+}
+
+void ap_connect(){
+  delay(500);
+
+  WiFi.disconnect();
+  WiFi.mode(WIFI_AP);
+  const char* ssid2     = ssid;
+  const char* password2 = password;
+
+  const char* host = "data.sparkfun.com";
+  const char* streamId   = "....................";
+  const char* privateKey = "....................";
+
+  Serial.print("connecting to ");
+  Serial.print(ssid);
+  Serial.print(" with ");
+  Serial.println(password);
+  Serial.print("password ");
+  Serial.println(password2);
+  WiFi.begin(ssid2, password2);
+  int count = 0;
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+    count++;
+    if ( count == 20 ) {
+      scan();
+      return;
+    }
+  }
+  scan();
+  Serial.println("");
+  Serial.println("WiFi connected");
+  Serial.println(WiFi.localIP());
+
+}
+
+void get_wifi_info(){
+  Serial.println();
+  Serial.println("getting wifi info...");
+
+  //reading ssid
+  for (int i = 0; i < sizeof(ssid); i++){
+    ssid[i] = (char)EEPROM.read(i);    
+    if (!ssid[i]){
+      password_addr = i+1; //advance passed the null
+      i = sizeof(ssid);
+    }
+  }
+
+  //reading ssid password
+  for (int i = 0; i < sizeof(password); i++,password_addr++){
+    password[i] = (char)EEPROM.read(password_addr);
+    Serial.print(" (reading password) ");
+    Serial.println(password[i]);
+    if (!password[i]){
+      i = sizeof(password);
+    }
+  }
+
+  Serial.print("ssid ");
+  Serial.println(ssid);  
+  Serial.print("password ");
+  Serial.println(password);
+
+  if (sizeof(password) > 4 && sizeof(ssid) > 4){
+    ap_connect();
+  }
+  
+  address = address + 1;
+  // there are only 512 bytes of EEPROM, from 0 to 511, so if we're
+  // on address 512, wrap around to address 0
+  if (address == 100)
+    address = 0;
 }
 
 void setup() {
@@ -294,19 +330,18 @@ void setup() {
   WiFi.mode(WIFI_STA);
   WiFi.disconnect();
   EEPROM.begin(512);
-  get_wifi_info();  
+  get_wifi_info();
 }
 
 void loop() {
-  if (scan_complete) {
+  /*if (scan_complete) {
     if (!ap_started){
       start_ap();
       ap_started = true;
     }
   } else {
     scan();
-  }
-  //store_wifi();
+  }*/
   server.handleClient();
   delay(100);
 } 
