@@ -35,6 +35,13 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 #include <EEPROM.h>
+#include <Arduino.h>
+#include <ESP8266WiFi.h>
+#include <ESP8266WiFiMulti.h>
+#include <WebSocketsClient.h>
+#include <Hash.h>
+ESP8266WiFiMulti WiFiMulti;
+WebSocketsClient webSocket;
 
 /** the current address in the EEPROM (i.e. which byte we're going to write to next) **/
 int addr = 0;
@@ -126,9 +133,14 @@ void drawGraph() {
   server.send ( 200, "image/svg+xml", out);
 }
 
-void get_input_data(){
-  Serial.print("grabbing 32 bytes of analog data");
-  int sensorValue = analogRead(A0);
+void get_analog_data(){
+  Serial.print("grabbing 48kbytes bytes of analog data");
+  int bufferSize = 48000;
+  int sensorValue = 0;
+  uint8_t analog_data[bufferSize];
+  for (int i = 0; i < bufferSize; i++){
+    analog_data[i] = analogRead(A0);
+  }
 }
 
 void store_wifi() {
@@ -324,6 +336,43 @@ void get_wifi_info(){
     address = 0;
 }
 
+void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
+
+
+    switch(type) {
+        case WStype_DISCONNECTED:
+            Serial.printf("[WSc] Disconnected!\n");
+            break;
+        case WStype_CONNECTED:
+            {
+                Serial.printf("[WSc] Connected to url: %s\n",  payload);
+        
+              // send message to server when Connected
+              char data[200] = "hello from ";
+              strcat(data,ap_ssid);
+              webSocket.sendTXT(data);
+              webSocket.sendTXT("sending 48kbytes of data...");
+              msg[k] = (char)tmp[k]
+              //webSocket.sendTXT(analog_data_string);
+            }
+            break;
+        case WStype_TEXT:
+            Serial.printf("[WSc] get text: %s\n", payload);
+
+      // send message to server
+      // webSocket.sendTXT("message here");
+            break;
+        case WStype_BIN:
+            Serial.printf("[WSc] get binary lenght: %u\n", lenght);
+            hexdump(payload, lenght);
+
+            // send data to server
+            // webSocket.sendBIN(payload, lenght);
+            break;
+    }
+
+}
+
 void setup() {
   Serial.begin(115200);
   // Set WiFi to station mode and disconnect from an AP if it was previously connected
@@ -331,6 +380,19 @@ void setup() {
   WiFi.disconnect();
   EEPROM.begin(512);
   get_wifi_info();
+
+  for(uint8_t t = 4; t > 0; t--) {
+    Serial.printf("[SETUP] BOOT WAIT %d...\n", t);
+    Serial.flush();
+    delay(1000);
+  }
+    //WiFi.disconnect();
+    while(WiFiMulti.run() != WL_CONNECTED) {
+        delay(100);
+    }
+
+    webSocket.begin("192.168.0.9", 3131);
+    webSocket.onEvent(webSocketEvent);     
 }
 
 void loop() {
@@ -342,6 +404,7 @@ void loop() {
   } else {
     scan();
   }*/
+  webSocket.loop();  
   server.handleClient();
   delay(100);
 } 
