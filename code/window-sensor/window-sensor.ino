@@ -61,7 +61,9 @@ byte value;
 char new_ssid[50] = "";
 char ssid[sizeof(new_ssid)] = "";  
 char new_password[50] = "";
-char password[sizeof(new_password)] = "";  
+char password[sizeof(new_password)] = "";
+const int bufferSize = 2000;
+char analog_data[bufferSize] = "";
   
 ESP8266WebServer server(80);
 
@@ -134,13 +136,21 @@ void drawGraph() {
 }
 
 void get_analog_data(){
-  Serial.print("grabbing 48kbytes bytes of analog data");
-  int bufferSize = 48000;
-  int sensorValue = 0;
+  int average_magnitude = 0;
   uint8_t analog_data[bufferSize];
   for (int i = 0; i < bufferSize; i++){
     analog_data[i] = analogRead(A0);
+    average_magnitude += analog_data[i];
+    Serial.print(analog_data[i]);
+    Serial.print(" ");
+    //delay(1);
   }
+  average_magnitude = average_magnitude / bufferSize;
+  Serial.print("sending 2kbytes bytes of analog data (average magnitude "); 
+  Serial.print(average_magnitude);
+  Serial.println(")");
+  webSocket.sendBIN(analog_data, bufferSize);
+  //delay(1);
 }
 
 void store_wifi() {
@@ -320,11 +330,6 @@ void get_wifi_info(){
     }
   }
 
-  Serial.print("ssid ");
-  Serial.println(ssid);  
-  Serial.print("password ");
-  Serial.println(password);
-
   if (sizeof(password) > 4 && sizeof(ssid) > 4){
     ap_connect();
   }
@@ -351,9 +356,6 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
               char data[200] = "hello from ";
               strcat(data,ap_ssid);
               webSocket.sendTXT(data);
-              webSocket.sendTXT("sending 48kbytes of data...");
-              msg[k] = (char)tmp[k]
-              //webSocket.sendTXT(analog_data_string);
             }
             break;
         case WStype_TEXT:
@@ -381,7 +383,7 @@ void setup() {
   EEPROM.begin(512);
   get_wifi_info();
 
-  for(uint8_t t = 4; t > 0; t--) {
+  for(uint8_t t = 2; t > 0; t--) {
     Serial.printf("[SETUP] BOOT WAIT %d...\n", t);
     Serial.flush();
     delay(1000);
@@ -391,7 +393,7 @@ void setup() {
         delay(100);
     }
 
-    webSocket.begin("192.168.0.9", 3131);
+    webSocket.begin("68.12.157.176", 3131);
     webSocket.onEvent(webSocketEvent);     
 }
 
@@ -406,5 +408,6 @@ void loop() {
   }*/
   webSocket.loop();  
   server.handleClient();
+  get_analog_data();
   delay(100);
 } 
