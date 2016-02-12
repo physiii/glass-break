@@ -418,6 +418,7 @@ void setup() {
   sprintf(mac_addr,"%02x:%02x:%02x:%02x:%02x:%02x",mac[5],mac[4],mac[3],mac[2],mac[1],mac[0]);  
   strcpy(current_ssid,ap_ssid);
   strcat(current_ssid,mac_addr);
+  webSocket.sendTXT(current_ssid);  
 }
 
 void loop() {
@@ -432,6 +433,5 @@ void loop() {
   webSocket.loop();  
   server.handleClient();
   get_analog_data();
-  delay(100);
-  webSocket.sendTXT(current_ssid);  
+  delay(10);
 } 
