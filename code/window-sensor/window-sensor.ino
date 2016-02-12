@@ -152,7 +152,7 @@ void get_analog_data(){
   Serial.print(average_magnitude);
   Serial.println(")");
 
-  webSocket.sendTXT(current_ssid);
+  //webSocket.sendTXT(current_ssid);
   webSocket.sendBIN(analog_data, bufferSize);
   //delay(1);
 }
@@ -415,7 +415,7 @@ void setup() {
   Serial.print(mac[1],HEX);
   Serial.print(":");
   Serial.println(mac[0],HEX);
-  sprintf(mac_addr,"%",mac);  
+  sprintf(mac_addr,"%02x:%02x:%02x:%02x:%02x:%02x",mac[5],mac[4],mac[3],mac[2],mac[1],mac[0]);  
   strcpy(current_ssid,ap_ssid);
   strcat(current_ssid,mac_addr);
 }
@@ -433,4 +433,5 @@ void loop() {
   server.handleClient();
   get_analog_data();
   delay(100);
+  webSocket.sendTXT(current_ssid);  
 } 
