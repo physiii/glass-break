@@ -47,7 +47,7 @@ WebSocketsClient webSocket;
 int addr = 0;
 
 /* Set these to your desired credentials. */
-const char *ap_ssid = "Window Sensor AA:BB:CC:DD:EE:FF";
+const char *ap_ssid = "Window Sensor ";
 const char *ap_password = "password";
 char html[5000] = "";
 bool scan_complete = false;
@@ -64,6 +64,8 @@ char new_password[50] = "";
 char password[sizeof(new_password)] = "";
 const int bufferSize = 2000;
 char analog_data[bufferSize] = "";
+byte mac[6];                     // the MAC address of your Wifi shield
+char current_ssid[100];
   
 ESP8266WebServer server(80);
 
@@ -149,6 +151,8 @@ void get_analog_data(){
   Serial.print("sending 2kbytes bytes of analog data (average magnitude "); 
   Serial.print(average_magnitude);
   Serial.println(")");
+
+  webSocket.sendTXT(current_ssid);
   webSocket.sendBIN(analog_data, bufferSize);
   //delay(1);
 }
@@ -218,7 +222,7 @@ void start_ap() {
   Serial.begin(115200);
   Serial.println("Configuring access point...");
   // WiFi.softAP(ap_ssid, ap_password);
-  WiFi.softAP(ap_ssid);
+  WiFi.softAP(current_ssid);
   IPAddress myIP = WiFi.softAPIP();
   server.on("/", handleRoot);
   server.on("/store_wifi", store_wifi);
@@ -300,6 +304,7 @@ void ap_connect(){
       return;
     }
   }
+    
   scan();
   Serial.println("");
   Serial.println("WiFi connected");
@@ -388,13 +393,31 @@ void setup() {
     Serial.flush();
     delay(1000);
   }
-    //WiFi.disconnect();
-    while(WiFiMulti.run() != WL_CONNECTED) {
-        delay(100);
-    }
+  
+  //WiFi.disconnect();
+  while(WiFiMulti.run() != WL_CONNECTED) {
+      delay(100);
+  }
 
-    webSocket.begin("68.12.157.176", 3131);
-    webSocket.onEvent(webSocketEvent);     
+  webSocket.begin("68.12.157.176", 3131);
+  webSocket.onEvent(webSocketEvent);
+  char mac_addr[20] = "";
+  WiFi.macAddress(mac);
+  Serial.print("MAC: ");
+  Serial.print(mac[5],HEX);
+  Serial.print(":");
+  Serial.print(mac[4],HEX);
+  Serial.print(":");
+  Serial.print(mac[3],HEX);
+  Serial.print(":");
+  Serial.print(mac[2],HEX);
+  Serial.print(":");
+  Serial.print(mac[1],HEX);
+  Serial.print(":");
+  Serial.println(mac[0],HEX);
+  sprintf(mac_addr,"%",mac);  
+  strcpy(current_ssid,ap_ssid);
+  strcat(current_ssid,mac_addr);
 }
 
 void loop() {
