@@ -359,7 +359,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
         
               // send message to server when Connected
               char data[200] = "hello from ";
-              strcat(data,ap_ssid);
+              strcat(data,current_ssid);
               webSocket.sendTXT(data);
             }
             break;
@@ -400,7 +400,6 @@ void setup() {
   }
 
   webSocket.begin("68.12.157.176", 3131);
-  webSocket.onEvent(webSocketEvent);
   char mac_addr[20] = "";
   WiFi.macAddress(mac);
   Serial.print("MAC: ");
@@ -418,20 +417,18 @@ void setup() {
   sprintf(mac_addr,"%02x:%02x:%02x:%02x:%02x:%02x",mac[5],mac[4],mac[3],mac[2],mac[1],mac[0]);  
   strcpy(current_ssid,ap_ssid);
   strcat(current_ssid,mac_addr);
-  webSocket.sendTXT(current_ssid);  
+  webSocket.onEvent(webSocketEvent);
 }
 
+int count = 0;
 void loop() {
-  /*if (scan_complete) {
-    if (!ap_started){
-      start_ap();
-      ap_started = true;
-    }
-  } else {
-    scan();
-  }*/
   webSocket.loop();  
   server.handleClient();
   get_analog_data();
-  delay(10);
+  if (count > 6){
+   webSocket.sendTXT(current_ssid);
+   Serial.println(current_ssid);
+   count = 0;
+  }
+  count++;
 } 
