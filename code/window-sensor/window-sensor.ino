@@ -36,6 +36,7 @@
 #include <ESP8266mDNS.h>
 #include <EEPROM.h>
 #include <Arduino.h>
+#include <Time.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>
 #include <WebSocketsClient.h>
@@ -48,7 +49,7 @@ int addr = 0;
 
 /* Set these to your desired credentials. */
 const char *ap_ssid = "Window Sensor ";
-const char *ap_password = "password";
+//const char *ap_password = "password";
 char html[5000] = "";
 bool scan_complete = false;
 bool ap_started = false;
@@ -58,22 +59,26 @@ int address = 0;
 int ssid_ptr = 0;
 int password_addr = 0;
 byte value;
-
+char response[100] = "";
 char ssid_found[50] = "";
 char ssid[50] = "";  
 char new_password[50] = "";
-char password[sizeof(new_password)] = "";
+char password[50] = "";
 const int bufferSize = 2000;
-char analog_data[bufferSize] = "";
-byte mac[6];                     // the MAC address of your Wifi shield
+uint8_t analog_data[bufferSize];
+char analog_data_str[bufferSize] = "";
+//uint8_t analog_buffer[44100];
+byte mac[6];
+char token[130] = "93f3f85eb3aa240080f92d4620993bd491ae16e0eb372f7634a5f953724ba3498263c84b47a4ae7d3323ba8b08679580456f8c38fce916222bc9ddbf405616c7";
 char current_ssid[100];
 bool isConnected = false;
-  
+char magnitude_str[50] = "";
+int magnitude = 0;
+char mac_addr[20] = "";
 ESP8266WebServer server(80);
 
-
-void connect_to_wifi();
-
+int ap_connect();
+void start_ap();
 /* Just a little test message.  Go to http://192.168.4.1 in a web browser
  * connected to this access point to see it.
  */
@@ -142,40 +147,54 @@ void drawGraph() {
   server.send ( 200, "image/svg+xml", out);
 }
 
+int sample_rate = 2;
 void get_analog_data(){
-  int average_magnitude = 0;
-  uint8_t analog_data[bufferSize];
   for (int i = 0; i < bufferSize; i++){
     analog_data[i] = analogRead(A0);
-    average_magnitude += analog_data[i];
-    Serial.print(analog_data[i]);
-    Serial.print(" ");
-    //delay(1);
+    magnitude += analog_data[i];
+    if (analog_data[i]){
+      analog_data_str[i] = analog_data[i];
+    } else {
+      analog_data_str[i] = 'A';
+      //Serial.println("found null");      
+    }
+    
+    //Serial.print(analog_data_str[i]);
+    //Serial.print(" ");
+    //Serial.print(analog_data[i]);
+    //Serial.print(" ");
+    delay( 1 / sample_rate );
   }
-  average_magnitude = average_magnitude / bufferSize;
-  Serial.print("sending 2kbytes bytes of analog data (average magnitude "); 
-  Serial.print(average_magnitude);
+/*
+  //if ( magnitude > 500) {
+  //average_magnitude = average_magnitude / bufferSize;
+  Serial.print("sending 2kbytes bytes of analog data (sum "); 
+  Serial.print(magnitude);
   Serial.println(")");
-
-  //webSocket.sendTXT(current_ssid);
-  webSocket.sendBIN(analog_data, bufferSize);
-  //delay(1);
+  char header_str[100] = "";
+  String(magnitude).toCharArray(magnitude_str,50);
+  strcpy(header_str,current_ssid);
+  strcat(header_str,",");
+  strcat(header_str,magnitude_str);
+  //webSocket.sendTXT(header_str);
+  //webSocket.sendBIN(analog_data, bufferSize);
+  //}  
+  */
 }
 
 void store_wifi() {
-  char new_password[100] = "";
   char html2[500] = "";
   strcpy(ssid,server.arg(0).c_str());
-  strcpy(new_password,server.arg(1).c_str());
+  strcpy(password,server.arg(1).c_str());
   Serial.print("storing | SSID (");
   Serial.print(ssid);
   Serial.print(")  PASSWORD (");
-  Serial.print(new_password);
+  Serial.print(password);
   Serial.print(")\n");
   strcat(html2,"updated ssid (");
   strcat(html2,ssid);
   strcat(html2,") and password (");
-  strcat(html2,new_password);
+  strcat(html2,password);
   strcat(html2,")");
 
   server.send(200, "text/html",html2);
@@ -204,15 +223,15 @@ void store_wifi() {
   Serial.println(" null ");
   EEPROM.write(j,0);
   j++;
-  for (i = 0; i < sizeof(new_password) ; i++,j++){
-    if (new_password[i]) {
+  for (i = 0; i < sizeof(password) ; i++,j++){
+    if (password[i]) {
       Serial.print(" (loop) ");
       Serial.print(j);
       Serial.print(" ");
-      Serial.println(new_password[i]);
-      EEPROM.write(j,new_password[i]);       
+      Serial.println(password[i]);
+      EEPROM.write(j,password[i]);       
     } else {
-      i = sizeof(new_password);
+      i = sizeof(password);
     }
   }
   Serial.print(" (adding) ");
@@ -222,13 +241,19 @@ void store_wifi() {
   EEPROM.commit();
   Serial.println((char)EEPROM.read(j+1));
 
-  connect_to_wifi();
+  if (ap_connect()) {
+    Serial.println("connected to wifi");
+    isConnected = true;
+  } else {
+    Serial.println("could not connect, starting access point...");
+    start_ap();
+    isConnected = false;
+  }
 }
 
 void start_ap(){
   WiFi.mode(WIFI_AP);
   WiFi.disconnect();
-  Serial.println("Configuring access point...");
   // WiFi.softAP(ap_ssid, ap_password);
   WiFi.softAP(current_ssid);
   IPAddress myIP = WiFi.softAPIP();
@@ -290,42 +315,34 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
     case WStype_DISCONNECTED:
       Serial.printf("[WSc] Disconnected!\n");
       break;
-     case WStype_CONNECTED:
-     {
-               Serial.printf("[WSc] Connected to url: %s\n",  payload);
-              // send message to server when Connected
-              char data[200] = "hello from ";
-              strcat(data,current_ssid);
-              webSocket.sendTXT(data);
-            }
-            break;
-        case WStype_TEXT:
-            Serial.printf("[WSc] get text: %s\n", payload);
-            // webSocket.sendTXT("message here");
-            break;
-        case WStype_BIN:
-            Serial.printf("[WSc] get binary lenght: %u\n", lenght);
-            hexdump(payload, lenght);
-            // send data to server
-            // webSocket.sendBIN(payload, lenght);
-            break;
+    case WStype_CONNECTED:
+    {
+      Serial.printf("[WSc] Connected to url: %s\n",  payload);
+      // send message to server when Connected
+      char data[200] = "hello from ";
+      strcat(data,current_ssid);
+      webSocket.sendTXT(data);
+      break;
     }
+    case WStype_TEXT:
+      Serial.printf("[WSc] get text: %s\n", payload);
+      strcpy(response,(char *)payload);      
+      // webSocket.sendTXT("message here");
+      break;
+    case WStype_BIN:
+      Serial.printf("[WSc] get binary lenght: %u\n", lenght);
+      hexdump(payload, lenght);
+      // webSocket.sendBIN(payload, lenght);
+      break;
+  }
 }
 
-void ap_connect(){
-  delay(500);
-
+int ap_connect(){
   WiFi.disconnect();
   WiFi.mode(WIFI_AP);
-
-  const char* host = "data.sparkfun.com";
-  const char* streamId   = "....................";
-  const char* privateKey = "....................";
-
   Serial.print("connecting to ");
   Serial.print(ssid);
   Serial.print(" with ");
-  Serial.print("password ");
   Serial.println(password);
   WiFi.begin(ssid, password);
   int count = 0;
@@ -335,23 +352,22 @@ void ap_connect(){
     count++;
     if ( count == 20 ) {
       Serial.println();
-      start_ap();
-      return;
+      //start_ap();
+      return 0;
     }
   }
   webSocket.onEvent(webSocketEvent);
-  webSocket.begin("68.12.157.176", 3131);  
-  isConnected = true;
+  webSocket.begin("68.12.157.176", 4000);
+  //webSocket.begin("wss://pyfi-relay.herokuapp.com", 5000);
   Serial.println("");
   Serial.println("WiFi connected");
   Serial.println(WiFi.localIP());
-
+  return 1;
 }
 
-void connect_to_wifi(){
+void get_device_info(){
   Serial.println();
   Serial.println("getting wifi info...");
-
   //reading ssid
   for (int i = 0; i < sizeof(ssid); i++){
     ssid[i] = (char)EEPROM.read(i);    
@@ -360,7 +376,6 @@ void connect_to_wifi(){
       i = sizeof(ssid);
     }
   }
-
   //reading ssid password
   for (int i = 0; i < sizeof(password); i++,password_addr++){
     password[i] = (char)EEPROM.read(password_addr);
@@ -368,11 +383,6 @@ void connect_to_wifi(){
       i = sizeof(password);
     }
   }
-
-  if (sizeof(password) > 4 && sizeof(ssid) > 4){
-    ap_connect();
-  }
-  
   address = address + 1;
   // there are only 512 bytes of EEPROM, from 0 to 511, so if we're
   // on address 512, wrap around to address 0
@@ -380,35 +390,71 @@ void connect_to_wifi(){
     address = 0;
 }
 
-void getmac(){
-  char mac_addr[20] = "";
+void getmac() {
   WiFi.macAddress(mac);
   sprintf(mac_addr,"%02x:%02x:%02x:%02x:%02x:%02x",mac[5],mac[4],mac[3],mac[2],mac[1],mac[0]);  
   strcpy(current_ssid,ap_ssid);
   strcat(current_ssid,mac_addr);  
 }
+
 void setup() {
   Serial.begin(115200);
   EEPROM.begin(512);
-
   getmac();
   scan();
-  connect_to_wifi();
+  get_device_info();
+  if (ap_connect()) {
+    Serial.print("connected to wifi");
+    isConnected = true;
+  } else {
+    Serial.println("could not connect, starting access point...");
+    start_ap();    
+  }
   routes();
 }
 
 int count = 0;
+char count_str[50] = "";
+char message[2100] = "";
+char now_str[10] = "";
 void loop() {
   server.handleClient();
-  if (isConnected){
-    webSocket.loop();  
-    get_analog_data();
-    if (count > 6){
-     webSocket.sendTXT(current_ssid);
-     Serial.println(current_ssid);
-     count = 0;
-    }
-    count++;    
+  webSocket.loop();
+  get_analog_data();
+  
+  if ( magnitude > 500 ) {
+    String(now()).toCharArray(now_str,10);
+    String(magnitude).toCharArray(magnitude_str,50);
+    strcpy(message,"{ \"mac\":\"");
+    strcat(message,mac_addr);
+    strcat(message,"\", \"device_type\":");
+    strcat(message,"\"window_sensor\"");
+    strcat(message,", \"uptime\":");
+    strcat(message,now_str);
+    strcat(message,", \"magnitude\":");    
+    strcat(message,magnitude_str);
+    strcat(message,", \"token\":\"");    
+    strcat(message,token);    
+    strcat(message,"\", \"data\":\"");
+    //strcat(message,analog_data_str);
+    strcat(message,"\" }");
+    webSocket.sendTXT(message);
+    //Serial.println(message);    
+    if (strcmp(response,"ok")==0){
+      //Serial.println("server reponded");
+      strcpy(response,"reset");
+    } else {
+    Serial.println("no response");    
+    //if ( count > 10 ) {
+      Serial.println("restarting ws");
+      webSocket.begin("68.12.157.176", 4000);
+      webSocket.onEvent(webSocketEvent);
+      count = 0;
+    //}
+      count++;
+    }  
   }
-  delay(10);
+  
+  magnitude = 0;
+  delay(100);
 } 
