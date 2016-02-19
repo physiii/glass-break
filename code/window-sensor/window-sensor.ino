@@ -49,6 +49,8 @@ int addr = 0;
 
 /* Set these to your desired credentials. */
 const char *ap_ssid = "Window Sensor ";
+const char *io_relay = "68.12.157.176";
+int io_port = 4000;
 //const char *ap_password = "password";
 char html[5000] = "";
 bool scan_complete = false;
@@ -438,19 +440,14 @@ void loop() {
     strcat(message,"\", \"data\":\"");
     //strcat(message,analog_data_str);
     strcat(message,"\" }");
-    webSocket.sendTXT(message);
-    //Serial.println(message);    
+    webSocket.sendTXT(message);   
     if (strcmp(response,"ok")==0){
-      //Serial.println("server reponded");
       strcpy(response,"reset");
     } else {
-    Serial.println("no response");    
-    //if ( count > 10 ) {
-      Serial.println("restarting ws");
-      webSocket.begin("68.12.157.176", 4000);
+      Serial.println("no response from ...");
+      webSocket.disconnect();
+      webSocket.begin(io_relay, io_port);
       webSocket.onEvent(webSocketEvent);
-      count = 0;
-    //}
       count++;
     }  
   }
