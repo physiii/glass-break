@@ -56,12 +56,16 @@ char html[5000] = "";
 bool scan_complete = false;
 bool ap_started = false;
 bool connect_to_ap = false;
+bool got_token = false;
 const int led = 13;
 int address = 0;
 int ssid_ptr = 0;
 int password_addr = 0;
 byte value;
-char response[100] = "";
+char response[130] = "";
+char token_req[200] = "";
+char is_token[130] = "";
+char response_token[130] = "";
 char ssid_found[50] = "";
 char ssid[50] = "";  
 char new_password[50] = "";
@@ -71,7 +75,7 @@ uint8_t analog_data[bufferSize];
 char analog_data_str[bufferSize] = "";
 //uint8_t analog_buffer[44100];
 byte mac[6];
-char token[130] = "93f3f85eb3aa240080f92d4620993bd491ae16e0eb372f7634a5f953724ba3498263c84b47a4ae7d3323ba8b08679580456f8c38fce916222bc9ddbf405616c7";
+char token[130] = "init";
 char current_ssid[100];
 bool isConnected = false;
 char magnitude_str[50] = "";
@@ -149,7 +153,7 @@ void drawGraph() {
   server.send ( 200, "image/svg+xml", out);
 }
 
-int sample_rate = 2;
+int sample_rate = 20;
 void get_analog_data(){
   for (int i = 0; i < bufferSize; i++){
     analog_data[i] = analogRead(A0);
@@ -158,30 +162,9 @@ void get_analog_data(){
       analog_data_str[i] = analog_data[i];
     } else {
       analog_data_str[i] = 'A';
-      //Serial.println("found null");      
     }
-    
-    //Serial.print(analog_data_str[i]);
-    //Serial.print(" ");
-    //Serial.print(analog_data[i]);
-    //Serial.print(" ");
     delay( 1 / sample_rate );
   }
-/*
-  //if ( magnitude > 500) {
-  //average_magnitude = average_magnitude / bufferSize;
-  Serial.print("sending 2kbytes bytes of analog data (sum "); 
-  Serial.print(magnitude);
-  Serial.println(")");
-  char header_str[100] = "";
-  String(magnitude).toCharArray(magnitude_str,50);
-  strcpy(header_str,current_ssid);
-  strcat(header_str,",");
-  strcat(header_str,magnitude_str);
-  //webSocket.sendTXT(header_str);
-  //webSocket.sendBIN(analog_data, bufferSize);
-  //}  
-  */
 }
 
 void store_wifi() {
@@ -315,7 +298,7 @@ void scan() {
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
   switch(type) {
     case WStype_DISCONNECTED:
-      Serial.printf("[WSc] Disconnected!\n");
+      Serial.println("[WSc] Disconnected!\n");
       break;
     case WStype_CONNECTED:
     {
@@ -327,8 +310,21 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
       break;
     }
     case WStype_TEXT:
+      Serial.print("[");
+      Serial.print(mac_addr);
+      Serial.print("]");    
       Serial.printf("[WSc] get text: %s\n", payload);
-      strcpy(response,(char *)payload);      
+      strcpy(response,(char *)payload);
+      strncpy(is_token,response,5);
+      if (strcmp(is_token,"token") == 0) {
+        for (int i = 0; i < sizeof(response); i++) {
+          response_token[i] = response[i + 5];
+        }
+        Serial.print("setting token | ");
+        Serial.println(response_token);
+        strcpy(token,response_token);
+        got_token = true;
+      }
       // webSocket.sendTXT("message here");
       break;
     case WStype_BIN:
@@ -359,7 +355,7 @@ int ap_connect(){
     }
   }
   webSocket.onEvent(webSocketEvent);
-  webSocket.begin("68.12.157.176", 4000);
+  webSocket.begin(io_relay, 4000);
   //webSocket.begin("wss://pyfi-relay.herokuapp.com", 5000);
   Serial.println("");
   Serial.println("WiFi connected");
@@ -394,9 +390,22 @@ void get_device_info(){
 
 void getmac() {
   WiFi.macAddress(mac);
-  sprintf(mac_addr,"%02x:%02x:%02x:%02x:%02x:%02x",mac[5],mac[4],mac[3],mac[2],mac[1],mac[0]);  
+  sprintf(mac_addr,"%02x%02x%02x%02x%02x%02x",mac[5],mac[4],mac[3],mac[2],mac[1],mac[0]);  
   strcpy(current_ssid,ap_ssid);
   strcat(current_ssid,mac_addr);  
+}
+
+void get_token() {
+  strcpy(token_req,"{ \"mac\":\"");
+  strcat(token_req,mac_addr);
+  strcat(token_req,"\", \"device_type\":");
+  strcat(token_req,"\"window_sensor\"");
+  strcat(token_req,", \"token\":\"");
+  strcat(token_req,token);
+  strcat(token_req,"\", \"cmd\":");
+  strcat(token_req,"\"tok_req\" }");
+  Serial.println(token_req);
+  webSocket.sendTXT(token_req);
 }
 
 void setup() {
@@ -423,33 +432,42 @@ void loop() {
   server.handleClient();
   webSocket.loop();
   get_analog_data();
-  
-  if ( magnitude > 500 ) {
-    String(now()).toCharArray(now_str,10);
-    String(magnitude).toCharArray(magnitude_str,50);
-    strcpy(message,"{ \"mac\":\"");
-    strcat(message,mac_addr);
-    strcat(message,"\", \"device_type\":");
-    strcat(message,"\"window_sensor\"");
-    strcat(message,", \"uptime\":");
-    strcat(message,now_str);
-    strcat(message,", \"magnitude\":");    
-    strcat(message,magnitude_str);
-    strcat(message,", \"token\":\"");    
-    strcat(message,token);    
-    strcat(message,"\", \"data\":\"");
-    //strcat(message,analog_data_str);
-    strcat(message,"\" }");
-    webSocket.sendTXT(message);   
-    if (strcmp(response,"ok")==0){
-      strcpy(response,"reset");
-    } else {
-      Serial.println("no response from ...");
-      webSocket.disconnect();
-      webSocket.begin(io_relay, io_port);
-      webSocket.onEvent(webSocketEvent);
-      count++;
-    }  
+  //Serial.println(magnitude);
+  if (got_token) {
+    if ( magnitude > 500 ) {
+      String(now()).toCharArray(now_str,10);
+      String(magnitude).toCharArray(magnitude_str,50);
+      strcpy(message,"{ \"mac\":\"");
+      strcat(message,mac_addr);
+      strcat(message,"\", \"device_type\":");
+      strcat(message,"\"window_sensor\"");
+      strcat(message,", \"uptime\":");
+      strcat(message,now_str);
+      strcat(message,", \"magnitude\":");    
+      strcat(message,magnitude_str);
+      strcat(message,", \"token\":\"");    
+      strcat(message,token);    
+      strcat(message,"\", \"data\":\"");
+      //strcat(message,analog_data_str);
+      strcat(message,"\" }");
+      Serial.println(message);
+      webSocket.sendTXT(message);
+      if (strcmp(response,"ok")==0){
+        strcpy(response,"reset");
+      } else {
+        Serial.print("no response from ");
+        Serial.println(io_relay);
+        if (count > 5) {
+          //webSocket.disconnect();
+          //webSocket.begin(io_relay, io_port);
+          //webSocket.onEvent(webSocketEvent);
+          count = 0;
+        }
+        count++;
+      }  
+    }
+  } else {
+    get_token();
   }
   
   magnitude = 0;
