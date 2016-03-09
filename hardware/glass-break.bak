@@ -51,7 +51,7 @@ P 9150 2050
 F 0 "U1" H 9500 1350 60  0000 C CNN
 F 1 "esp12" V 9150 1950 60  0000 C CNN
 F 2 "esp12e:Esp12e" H 9200 2400 60  0000 C CNN
-F 3 "http://www.mouser.com/ProductDetail/Adafruit/2491/?qs=sGAEpiMZZMsMyYRRhGMFNh3isolDxGLO%2fZK71n5k6Ow%3d" H 9200 2400 60  0001 C CNN
+F 3 "https://learn.adafruit.com/adafruit-huzzah-esp8266-breakout?view=all" H 9200 2400 60  0001 C CNN
 	1    9150 2050
 	1    0    0    -1  
 $EndComp
