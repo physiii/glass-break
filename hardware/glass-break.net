@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/chris/window-sensor/hardware/glass-break.sch)
-    (date "Tue 08 Mar 2016 06:41:02 PM CST")
+    (date "Thu 10 Mar 2016 05:13:55 PM CST")
     (tool "Eeschema 4.0.2-4+6225~38~ubuntu15.10.1-stable")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
