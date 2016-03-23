@@ -96,12 +96,12 @@ $EndDescr
 $Comp
 L esp12 U1
 U 1 1 56C613D6
-P 9150 2050
-F 0 "U1" H 9500 1350 60  0000 C CNN
-F 1 "esp12" V 9150 1950 60  0000 C CNN
-F 2 "esp12e:Esp12e" H 9200 2400 60  0000 C CNN
-F 3 "https://learn.adafruit.com/adafruit-huzzah-esp8266-breakout?view=all" H 9200 2400 60  0001 C CNN
-	1    9150 2050
+P 12700 2000
+F 0 "U1" H 13050 1300 60  0000 C CNN
+F 1 "esp12" V 12700 1900 60  0000 C CNN
+F 2 "esp12e:Esp12e" H 12750 2350 60  0000 C CNN
+F 3 "https://learn.adafruit.com/adafruit-huzzah-esp8266-breakout?view=all" H 12750 2350 60  0001 C CNN
+	1    12700 2000
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -367,8 +367,8 @@ U 1 1 56C668CA
 P 7500 1950
 F 0 "U2" H 7500 2100 50  0000 L CNN
 F 1 "OP275" H 7500 1800 50  0000 L CNN
-F 2 "Housings_SOIC:SOIC-8_3.9x4.9mm_Pitch1.27mm" H 7400 2000 50  0000 C CNN
-F 3 "http://www.mouser.com/ds/2/609/OP275-879536.pdf" H 7500 2100 50  0000 C CNN
+F 2 "Housings_SOIC:SOIC-8_3.9x4.9mm_Pitch1.27mm" H 7400 2000 50  0001 C CNN
+F 3 "http://www.mouser.com/ds/2/609/OP275-879536.pdf" H 7500 2100 50  0001 C CNN
 	1    7500 1950
 	1    0    0    1   
 $EndComp
@@ -429,15 +429,15 @@ GPIO13
 $Comp
 L +3.3V #PWR30
 U 1 1 56C7E707
-P 7950 2550
-F 0 "#PWR30" H 7950 2400 50  0001 C CNN
-F 1 "+3.3V" H 7950 2690 50  0000 C CNN
-F 2 "" H 7950 2550 50  0000 C CNN
-F 3 "" H 7950 2550 50  0000 C CNN
-	1    7950 2550
+P 11650 2800
+F 0 "#PWR30" H 11650 2650 50  0001 C CNN
+F 1 "+3.3V" H 11650 2940 50  0000 C CNN
+F 2 "" H 11650 2800 50  0000 C CNN
+F 3 "" H 11650 2800 50  0000 C CNN
+	1    11650 2800
 	0    -1   1    0   
 $EndComp
-Text GLabel 8250 1800 1    60   Input ~ 0
+Text GLabel 8250 1950 2    60   Input ~ 0
 ADC
 Text GLabel 5000 4000 0    60   Input ~ 0
 CH_PD
@@ -706,12 +706,12 @@ RESET_5V
 $Comp
 L GND #PWR32
 U 1 1 56D896D0
-P 9950 2700
-F 0 "#PWR32" H 9950 2450 50  0001 C CNN
-F 1 "GND" H 9950 2550 50  0000 C CNN
-F 2 "" H 9950 2700 50  0000 C CNN
-F 3 "" H 9950 2700 50  0000 C CNN
-	1    9950 2700
+P 13500 2650
+F 0 "#PWR32" H 13500 2400 50  0001 C CNN
+F 1 "GND" H 13500 2500 50  0000 C CNN
+F 2 "" H 13500 2650 50  0000 C CNN
+F 3 "" H 13500 2650 50  0000 C CNN
+	1    13500 2650
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -817,19 +817,19 @@ F 3 "" H 6900 1350 50  0000 C CNN
 	1    6900 1350
 	1    0    0    -1  
 $EndComp
-Text GLabel 10200 2350 2    60   Input ~ 0
+Text GLabel 13750 2300 2    60   Input ~ 0
 GPIO2
-Text GLabel 10200 2250 2    60   Input ~ 0
+Text GLabel 13750 2200 2    60   Input ~ 0
 GPIO0
-Text GLabel 10200 2150 2    60   Input ~ 0
+Text GLabel 13750 2100 2    60   Input ~ 0
 GPIO4
-Text GLabel 10200 2050 2    60   Input ~ 0
+Text GLabel 13750 2000 2    60   Input ~ 0
 GPIO5
-Text GLabel 10200 2450 2    60   Input ~ 0
+Text GLabel 13750 2400 2    60   Input ~ 0
 GPIO15
-Text GLabel 10200 1950 2    60   Input ~ 0
+Text GLabel 13750 1900 2    60   Input ~ 0
 RXD
-Text GLabel 10200 1850 2    60   Input ~ 0
+Text GLabel 13750 1800 2    60   Input ~ 0
 TXD
 Text Label 5150 3800 0    39   ~ 0
 RESET_5V
@@ -841,17 +841,17 @@ Text GLabel 5000 3800 0    60   Input ~ 0
 RESET_5V
 Text GLabel 5000 3800 0    60   Input ~ 0
 RESET_5V
-Text GLabel 8500 1350 1    60   Input ~ 0
+Text GLabel 12050 1300 1    60   Input ~ 0
 RESET
-Text GLabel 8300 2250 0    60   Input ~ 0
+Text GLabel 11850 2200 0    60   Input ~ 0
 GPIO14
-Text GLabel 8300 2350 0    60   Input ~ 0
+Text GLabel 11850 2300 0    60   Input ~ 0
 GPIO12
-Text GLabel 8300 2450 0    60   Input ~ 0
+Text GLabel 11850 2400 0    60   Input ~ 0
 GPIO13
-Text GLabel 8300 2050 0    60   Input ~ 0
+Text GLabel 11850 2000 0    60   Input ~ 0
 CH_PD
-Text GLabel 8300 2150 0    60   Input ~ 0
+Text GLabel 11850 2100 0    60   Input ~ 0
 GPIO16
 $Comp
 L R R12
@@ -1044,16 +1044,16 @@ Connection ~ 7950 1950
 Wire Wire Line
 	7400 2250 7400 2500
 Wire Wire Line
-	7800 1950 8500 1950
+	11350 1900 12050 1900
 Wire Wire Line
-	7950 2550 8500 2550
+	11500 2500 12050 2500
 Wire Wire Line
 	6600 4200 7000 4200
 Wire Wire Line
 	6600 4300 7000 4300
 Wire Wire Line
-	8250 1800 8250 1950
-Connection ~ 8250 1950
+	11800 1750 11800 1900
+Connection ~ 11800 1900
 Wire Wire Line
 	5000 4100 5450 4100
 Wire Wire Line
@@ -1100,9 +1100,9 @@ Wire Wire Line
 Wire Wire Line
 	3300 1450 3300 1150
 Wire Wire Line
-	9800 2550 9950 2550
+	13350 2500 13500 2500
 Wire Wire Line
-	9950 2550 9950 2700
+	13500 2500 13500 2650
 Wire Wire Line
 	5400 1850 6100 1850
 Wire Wire Line
@@ -1116,31 +1116,31 @@ Wire Wire Line
 Wire Wire Line
 	6300 5250 6300 5500
 Wire Wire Line
-	9800 1850 10200 1850
+	13350 1800 13750 1800
 Wire Wire Line
-	9800 1950 10200 1950
+	13350 1900 13750 1900
 Wire Wire Line
-	9800 2050 10200 2050
+	13350 2000 13750 2000
 Wire Wire Line
-	9800 2150 10200 2150
+	13350 2100 13750 2100
 Wire Wire Line
-	9800 2450 10200 2450
+	13350 2400 13750 2400
 Wire Wire Line
-	9800 2250 10200 2250
+	13350 2200 13750 2200
 Wire Wire Line
-	9800 2350 10200 2350
+	13350 2300 13750 2300
 Wire Wire Line
-	8500 1350 8500 1850
+	12050 1300 12050 1800
 Wire Wire Line
-	8300 2050 8500 2050
+	11850 2000 12050 2000
 Wire Wire Line
-	8300 2150 8500 2150
+	11850 2100 12050 2100
 Wire Wire Line
-	8300 2250 8500 2250
+	11850 2200 12050 2200
 Wire Wire Line
-	8300 2350 8500 2350
+	11850 2300 12050 2300
 Wire Wire Line
-	8300 2450 8500 2450
+	11850 2400 12050 2400
 Wire Wire Line
 	6900 1750 6900 2150
 Wire Wire Line
@@ -1167,4 +1167,6 @@ Wire Wire Line
 Connection ~ 1250 4950
 Wire Wire Line
 	1750 5950 1750 6050
+Wire Wire Line
+	7800 1950 8250 1950
 $EndSCHEMATC

@@ -1,4 +1,4 @@
-update=Mon 14 Mar 2016 09:16:54 AM CDT
+update=Wed 23 Mar 2016 11:02:03 AM CDT
 version=1
 last_client=kicad
 [pcbnew]
@@ -25,9 +25,19 @@ version=1
 NetIExt=net
 [general]
 version=1
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=../screenshots/
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=
+SpiceForceRefPrefix=0
+SpiceUseNetNumbers=0
+LabSize=60
 [eeschema]
 version=1
-LibDir=
+LibDir=../../garage-opener/hardware
 [eeschema/libraries]
 LibName1=power
 LibName2=device
