@@ -1,4 +1,4 @@
-update=Wed 23 Mar 2016 11:02:03 AM CDT
+update=Thu 24 Mar 2016 04:56:32 AM CDT
 version=1
 last_client=kicad
 [pcbnew]
@@ -37,7 +37,7 @@ SpiceUseNetNumbers=0
 LabSize=60
 [eeschema]
 version=1
-LibDir=../../garage-opener/hardware
+LibDir=
 [eeschema/libraries]
 LibName1=power
 LibName2=device
@@ -118,3 +118,4 @@ LibName76=video
 LibName77=Worldsemi
 LibName78=Xicor
 LibName79=Zilog
+LibName80=/home/physiii/code/garage-opener/hardware/garage-opener-cache
