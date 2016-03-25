@@ -1,4 +1,4 @@
-update=Thu 24 Mar 2016 04:56:32 AM CDT
+update=Thu 24 Mar 2016 08:16:59 PM CDT
 version=1
 last_client=kicad
 [pcbnew]
@@ -118,4 +118,4 @@ LibName76=video
 LibName77=Worldsemi
 LibName78=Xicor
 LibName79=Zilog
-LibName80=/home/physiii/code/garage-opener/hardware/garage-opener-cache
+LibName80=/home/chris/circuits/garage-opener/hardware/garage-opener-cache
