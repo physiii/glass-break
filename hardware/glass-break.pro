@@ -1,4 +1,4 @@
-update=Thu 24 Mar 2016 08:16:59 PM CDT
+update=Mon 28 Mar 2016 04:58:45 PM CDT
 version=1
 last_client=kicad
 [pcbnew]
@@ -37,7 +37,7 @@ SpiceUseNetNumbers=0
 LabSize=60
 [eeschema]
 version=1
-LibDir=
+LibDir=../../../circuits;../../garage-opener/hardware
 [eeschema/libraries]
 LibName1=power
 LibName2=device
