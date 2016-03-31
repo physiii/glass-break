@@ -2,7 +2,7 @@
 <export version="D">
   <design>
     <source>/home/physiii/circuits/window-sensor/hardware/glass-break.sch</source>
-    <date>Thu 31 Mar 2016 11:33:16 AM CDT</date>
+    <date>Thu 31 Mar 2016 12:46:34 PM CDT</date>
     <tool>Eeschema 4.0.2-4+6225~38~ubuntu15.10.1-stable</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -74,9 +74,12 @@
       <tstamp>56C660C8</tstamp>
     </comp>
     <comp ref="C3">
-      <value>10uF</value>
-      <footprint>Capacitors_SMD:C_0603</footprint>
+      <value>10uf</value>
+      <footprint>Capacitors_SMD:C_0805</footprint>
       <datasheet>http://www.mouser.com/ds/2/400/lcc_commercial_general_en-837201.pdf</datasheet>
+      <fields>
+        <field name="Part Number">VJ0805G106KXQTW1BC</field>
+      </fields>
       <libsource lib="device" part="C"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56C65752</tstamp>
@@ -85,6 +88,9 @@
       <value>12pF</value>
       <footprint>Resistors_SMD:R_0603</footprint>
       <datasheet>GRM0335C1H120GA01D</datasheet>
+      <fields>
+        <field name="Part Number">GRM0335C1H120GA01D</field>
+      </fields>
       <libsource lib="device" part="C"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56C658E9</tstamp>
@@ -93,6 +99,9 @@
       <value>4.7 uF</value>
       <footprint>Capacitors_SMD:C_0805</footprint>
       <datasheet>C0603X5R1C472K030BA</datasheet>
+      <fields>
+        <field name="Part Number">C0603X5R1C472K030BA</field>
+      </fields>
       <libsource lib="device" part="C"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56C65A5B</tstamp>
@@ -101,6 +110,9 @@
       <value>1M</value>
       <footprint>Resistors_SMD:R_0603</footprint>
       <datasheet>ERJ-3GEYJ105V</datasheet>
+      <fields>
+        <field name="Part Number">ERJ-3GEYJ105V</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56C65B57</tstamp>
@@ -109,6 +121,9 @@
       <value>10k</value>
       <footprint>Resistors_SMD:R_0603</footprint>
       <datasheet>ERJ-3GEYJ103V</datasheet>
+      <fields>
+        <field name="Part Number">ERJ-3GEYJ103V</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56C65C10</tstamp>
@@ -117,14 +132,20 @@
       <value>10K</value>
       <footprint>Resistors_SMD:R_0603</footprint>
       <datasheet>ERJ-3GEYJ103V</datasheet>
+      <fields>
+        <field name="Part Number">ERJ-3GEYJ103V</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56C65CCA</tstamp>
     </comp>
     <comp ref="U2">
-      <value>OP275</value>
+      <value>OPA344</value>
       <footprint>Housings_SOIC:SOIC-8_3.9x4.9mm_Pitch1.27mm</footprint>
       <datasheet>http://www.mouser.com/ds/2/609/OP275-879536.pdf</datasheet>
+      <fields>
+        <field name="Part Number">OPA344NA/3K</field>
+      </fields>
       <libsource lib="linear" part="OP275"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56C668CA</tstamp>
@@ -188,6 +209,9 @@
       <value>10K</value>
       <footprint>Resistors_SMD:R_0603</footprint>
       <datasheet>ERJ-3GEYJ103V</datasheet>
+      <fields>
+        <field name="Part Number">ERJ-3GEYJ103V</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56DAB83F</tstamp>
@@ -196,6 +220,9 @@
       <value>2.2K</value>
       <footprint>Resistors_SMD:R_0603</footprint>
       <datasheet>ERJ-3GEYJ222V</datasheet>
+      <fields>
+        <field name="Part Number">ERJ-3GEYJ222V</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56DABC16</tstamp>
@@ -204,6 +231,9 @@
       <value>CMC-5044PF-A</value>
       <footprint>esp12e:Electret</footprint>
       <datasheet>http://www.mouser.com/ds/2/670/cmc-5044pf-a-515902.pdf</datasheet>
+      <fields>
+        <field name="Part Number">CMC-5044PF-A</field>
+      </fields>
       <libsource lib="glass-break" part="electret_microphone"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56DABF04</tstamp>
@@ -212,6 +242,9 @@
       <value>ESP-WROOM-02</value>
       <footprint>garage-opener:ESP-WROOM-02</footprint>
       <datasheet>http://espressif.com/en/products/hardware/esp-wroom-02/resources</datasheet>
+      <fields>
+        <field name="Part Number">ESP-WROOM-02</field>
+      </fields>
       <libsource lib="garage-opener-cache" part="ESP-WROOM-02"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56F3BF65</tstamp>
@@ -220,6 +253,9 @@
       <value>10K</value>
       <footprint>Resistors_SMD:R_0603</footprint>
       <datasheet>ERJ-3GEYJ103V</datasheet>
+      <fields>
+        <field name="Part Number">ERJ-3GEYJ103V</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56D78C14</tstamp>
@@ -294,6 +330,9 @@
       <value>BLM18PG330SN1D</value>
       <footprint>Resistors_SMD:R_0603</footprint>
       <datasheet>http://www.murata.com/~/media/webrenewal/support/library/catalog/products/emc/emifil/c31e.ashx?la=en-us</datasheet>
+      <fields>
+        <field name="Part Number">BLM18PG330SN1D</field>
+      </fields>
       <libsource lib="garage-opener-cache" part="BK0603HS330-T"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56F9B146</tstamp>
@@ -302,6 +341,9 @@
       <value>FT230XS</value>
       <footprint>Housings_SSOP:SSOP-16_3.9x4.9mm_Pitch0.635mm</footprint>
       <datasheet>http://www.mouser.com/ds/2/163/DS_FT230X-5395.pdf</datasheet>
+      <fields>
+        <field name="Part Number">FT230XS</field>
+      </fields>
       <libsource lib="ftdi" part="FT230XS"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56F9B71F</tstamp>
@@ -310,6 +352,9 @@
       <value>1k</value>
       <footprint>Resistors_SMD:R_0603</footprint>
       <datasheet>ERJ-3EKF1001V</datasheet>
+      <fields>
+        <field name="Part Number">ERJ-3EKF1001V</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56F9BC4E</tstamp>
@@ -318,6 +363,9 @@
       <value>1k</value>
       <footprint>Resistors_SMD:R_0603</footprint>
       <datasheet>ERJ-3EKF1001V</datasheet>
+      <fields>
+        <field name="Part Number">ERJ-3EKF1001V</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56F9C394</tstamp>
@@ -326,6 +374,9 @@
       <value>1k</value>
       <footprint>Resistors_SMD:R_0603</footprint>
       <datasheet>ERJ-3EKF1001V</datasheet>
+      <fields>
+        <field name="Part Number">ERJ-3EKF1001V</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56F9C4FE</tstamp>
@@ -334,6 +385,9 @@
       <value>1k</value>
       <footprint>Resistors_SMD:R_0603</footprint>
       <datasheet>ERJ-3EKF1001V</datasheet>
+      <fields>
+        <field name="Part Number">ERJ-3EKF1001V</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56F9C596</tstamp>
@@ -342,6 +396,9 @@
       <value>LED</value>
       <footprint>LEDs:LED_0805</footprint>
       <datasheet>LS Q976-NR-1</datasheet>
+      <fields>
+        <field name="Part Number">LS Q976-NR-1</field>
+      </fields>
       <libsource lib="device" part="LED"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56F9CDB3</tstamp>
@@ -350,6 +407,9 @@
       <value>LED</value>
       <footprint>LEDs:LED_0805</footprint>
       <datasheet>LS Q976-NR-1</datasheet>
+      <fields>
+        <field name="Part Number">LS Q976-NR-1</field>
+      </fields>
       <libsource lib="device" part="LED"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56F9D4AC</tstamp>
@@ -358,6 +418,9 @@
       <value>LED</value>
       <footprint>LEDs:LED_0805</footprint>
       <datasheet>LS Q976-NR-1</datasheet>
+      <fields>
+        <field name="Part Number">LS Q976-NR-1</field>
+      </fields>
       <libsource lib="device" part="LED"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56F9D5ED</tstamp>
@@ -366,6 +429,9 @@
       <value>27R</value>
       <footprint>Resistors_SMD:R_0603</footprint>
       <datasheet>ERJ-3GEYJ270V</datasheet>
+      <fields>
+        <field name="Part Number">ERJ-3GEYJ270V</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56F9F663</tstamp>
@@ -374,6 +440,9 @@
       <value>27R</value>
       <footprint>Resistors_SMD:R_0603</footprint>
       <datasheet>ERJ-3GEYJ270V</datasheet>
+      <fields>
+        <field name="Part Number">ERJ-3GEYJ270V</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56F9FAE7</tstamp>
@@ -382,6 +451,9 @@
       <value>47pf</value>
       <footprint>Capacitors_SMD:C_0603</footprint>
       <datasheet>VJ0603A470JXACW1BC</datasheet>
+      <fields>
+        <field name="Part Number">VJ0603A470JXACW1BC</field>
+      </fields>
       <libsource lib="device" part="C"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56FA03F1</tstamp>
@@ -390,6 +462,9 @@
       <value>47pf</value>
       <footprint>Capacitors_SMD:C_0603</footprint>
       <datasheet>VJ0603A470JXACW1BC</datasheet>
+      <fields>
+        <field name="Part Number">VJ0603A470JXACW1BC</field>
+      </fields>
       <libsource lib="device" part="C"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56FA08C5</tstamp>
@@ -398,6 +473,9 @@
       <value>Si7055-A20-IM</value>
       <footprint>Housings_DFN_QFN:DFN-6-1EP_3x3mm_Pitch0.95mm</footprint>
       <datasheet>http://www.mouser.com/ds/2/368/Si7050-1-3-4-5-A20-907443.pdf</datasheet>
+      <fields>
+        <field name="Part Number">Si7055-A20-IM</field>
+      </fields>
       <libsource lib="glass-break-cache" part="Si7055-A20-IM"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56FAE08E</tstamp>
@@ -406,6 +484,9 @@
       <value>2.2K</value>
       <footprint>Resistors_SMD:R_0603</footprint>
       <datasheet>ERJ-3GEYJ222V</datasheet>
+      <fields>
+        <field name="Part Number">ERJ-3GEYJ222V</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56FBBB39</tstamp>
@@ -414,6 +495,9 @@
       <value>2.2K</value>
       <footprint>Resistors_SMD:R_0603</footprint>
       <datasheet>ERJ-3GEYJ222V</datasheet>
+      <fields>
+        <field name="Part Number">ERJ-3GEYJ222V</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56FBCA58</tstamp>
@@ -422,6 +506,9 @@
       <value>TSL2581FN</value>
       <footprint>Housings_DFN_QFN:DFN-6-1EP_2x2mm_Pitch0.65mm</footprint>
       <datasheet>http://www.mouser.com/ds/2/588/TSL2581TSL2583-519228.pdf</datasheet>
+      <fields>
+        <field name="Part Number">TSL2581FN</field>
+      </fields>
       <libsource lib="glass-break-cache" part="TSL2581FN"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56FAC6F7</tstamp>
@@ -430,6 +517,9 @@
       <value>1K</value>
       <footprint>Resistors_SMD:R_0603</footprint>
       <datasheet>ERJ-3EKF1001V</datasheet>
+      <fields>
+        <field name="Part Number">ERJ-3EKF1001V</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56FB78BE</tstamp>
@@ -438,6 +528,9 @@
       <value>1K</value>
       <footprint>Resistors_SMD:R_0603</footprint>
       <datasheet>ERJ-3EKF1001V</datasheet>
+      <fields>
+        <field name="Part Number">ERJ-3EKF1001V</field>
+      </fields>
       <libsource lib="device" part="R"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56FBBABC</tstamp>
@@ -457,6 +550,9 @@
       <value>47pf</value>
       <footprint>Capacitors_SMD:C_0603</footprint>
       <datasheet>VJ0603A470JXACW1BC</datasheet>
+      <fields>
+        <field name="Part Number">VJ0603A470JXACW1BC</field>
+      </fields>
       <libsource lib="device" part="C"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56FE5D38</tstamp>
@@ -465,6 +561,9 @@
       <value>47pf</value>
       <footprint>Capacitors_SMD:C_0603</footprint>
       <datasheet>VJ0603A470JXACW1BC</datasheet>
+      <fields>
+        <field name="Part Number">VJ0603A470JXACW1BC</field>
+      </fields>
       <libsource lib="device" part="C"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56FE5E13</tstamp>

@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/physiii/circuits/window-sensor/hardware/glass-break.sch)
-    (date "Thu 31 Mar 2016 10:20:48 AM CDT")
+    (date "Thu 31 Mar 2016 12:30:28 PM CDT")
     (tool "Eeschema 4.0.2-4+6225~38~ubuntu15.10.1-stable")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -37,6 +37,8 @@
       (value SPX3819)
       (footprint TO_SOT_Packages_SMD:SOT-23-5)
       (datasheet http://www.mouser.com/ds/2/146/SPX3819_DS_R200_082312-17072.pdf)
+      (fields
+        (field (name "Part Number") ERJ-3GEYJ103V))
       (libsource (lib garage-opener-cache) (part SPX3819))
       (sheetpath (names /) (tstamps /))
       (tstamp 56C65BE9))
@@ -44,20 +46,26 @@
       (value 10K)
       (footprint Resistors_SMD:R_0603)
       (datasheet ERJ-3GEYJ103V)
+      (fields
+        (field (name "Part Number") ERJ-3GEYJ103V))
       (libsource (lib device) (part R))
       (sheetpath (names /) (tstamps /))
       (tstamp 56C65DB7))
     (comp (ref MBR120-1)
       (value ZENER)
       (footprint Diodes_SMD:SOD-123)
-      (datasheet http://www.mouser.com/ds/2/308/MBR120VLSFT1-D-107081.pdf)
+      (datasheet MBR120VLSFT1G)
+      (fields
+        (field (name "Part Number") MBR120VLSFT1G))
       (libsource (lib device) (part ZENER))
       (sheetpath (names /) (tstamps /))
       (tstamp 56C660C8))
     (comp (ref C3)
-      (value 10uF)
-      (footprint Capacitors_SMD:C_0603)
+      (value 10uf)
+      (footprint Capacitors_SMD:C_0805)
       (datasheet http://www.mouser.com/ds/2/400/lcc_commercial_general_en-837201.pdf)
+      (fields
+        (field (name "Part Number") VJ0805G106KXQTW1BC))
       (libsource (lib device) (part C))
       (sheetpath (names /) (tstamps /))
       (tstamp 56C65752))
@@ -72,6 +80,8 @@
       (value "4.7 uF")
       (footprint Capacitors_SMD:C_0805)
       (datasheet C0603X5R1C472K030BA)
+      (fields
+        (field (name "Part Number") C0603X5R1C472K030BA))
       (libsource (lib device) (part C))
       (sheetpath (names /) (tstamps /))
       (tstamp 56C65A5B))
@@ -86,6 +96,8 @@
       (value 10k)
       (footprint Resistors_SMD:R_0603)
       (datasheet ERJ-3GEYJ103V)
+      (fields
+        (field (name "Part Number") ERJ-3GEYJ103V))
       (libsource (lib device) (part R))
       (sheetpath (names /) (tstamps /))
       (tstamp 56C65C10))
@@ -93,6 +105,8 @@
       (value 10K)
       (footprint Resistors_SMD:R_0603)
       (datasheet ERJ-3GEYJ103V)
+      (fields
+        (field (name "Part Number") ERJ-3GEYJ103V))
       (libsource (lib device) (part R))
       (sheetpath (names /) (tstamps /))
       (tstamp 56C65CCA))
@@ -106,6 +120,9 @@
     (comp (ref P1)
       (value USB_OTG)
       (footprint Connect:USB_Micro-B)
+      (datasheet http://www.mouser.com/ds/2/123/690-005-299-143-262410.pdf)
+      (fields
+        (field (name "Part Number") 10118194-0001LF))
       (libsource (lib conn) (part USB_OTG))
       (sheetpath (names /) (tstamps /))
       (tstamp 56C75F6C))
@@ -113,6 +130,8 @@
       (value 1K)
       (footprint Resistors_SMD:R_0603)
       (datasheet ERJ-3EKF1001V)
+      (fields
+        (field (name "Part Number") ERJ-3EKF1001V))
       (libsource (lib device) (part R))
       (sheetpath (names /) (tstamps /))
       (tstamp 56D78B0E))
@@ -120,6 +139,8 @@
       (value SW_PUSH)
       (footprint Buttons_Switches_SMD:SW_SPST_KMR2)
       (datasheet http://www.mouser.com/ds/2/60/KMR2_9aug12-25127.pdf)
+      (fields
+        (field (name "Part Number") "KMR211NG LFS"))
       (libsource (lib device) (part SW_PUSH))
       (sheetpath (names /) (tstamps /))
       (tstamp 56D79729))
@@ -127,12 +148,17 @@
       (value 1K)
       (footprint Resistors_SMD:R_0603)
       (datasheet ERJ-3EKF1001V)
+      (fields
+        (field (name "Part Number") ERJ-3EKF1001V))
       (libsource (lib device) (part R))
       (sheetpath (names /) (tstamps /))
       (tstamp 56D7CEE0))
     (comp (ref D4)
       (value LED)
       (footprint LEDs:LED_0805)
+      (datasheet "LS Q976-NR-1")
+      (fields
+        (field (name "Part Number") "LS Q976-NR-1"))
       (libsource (lib device) (part LED))
       (sheetpath (names /) (tstamps /))
       (tstamp 56D7CEF7))
@@ -140,6 +166,8 @@
       (value 10K)
       (footprint Resistors_SMD:R_0603)
       (datasheet ERJ-3GEYJ103V)
+      (fields
+        (field (name "Part Number") ERJ-3GEYJ103V))
       (libsource (lib device) (part R))
       (sheetpath (names /) (tstamps /))
       (tstamp 56DAB83F))
@@ -147,6 +175,8 @@
       (value 2.2K)
       (footprint Resistors_SMD:R_0603)
       (datasheet ERJ-3GEYJ222V)
+      (fields
+        (field (name "Part Number") ERJ-3GEYJ222V))
       (libsource (lib device) (part R))
       (sheetpath (names /) (tstamps /))
       (tstamp 56DABC16))
@@ -154,6 +184,8 @@
       (value CMC-5044PF-A)
       (footprint esp12e:Electret)
       (datasheet http://www.mouser.com/ds/2/670/cmc-5044pf-a-515902.pdf)
+      (fields
+        (field (name "Part Number") CMC-5044PF-A))
       (libsource (lib glass-break) (part electret_microphone))
       (sheetpath (names /) (tstamps /))
       (tstamp 56DABF04))
@@ -175,6 +207,8 @@
       (value BSS84LT1G)
       (footprint TO_SOT_Packages_SMD:SOT-23)
       (datasheet http://www.mouser.com/ds/2/308/BSS84LT1-D-105913.pdf)
+      (fields
+        (field (name "Part Number") BSS84LT1G))
       (libsource (lib device) (part Q_PMOS_GSD))
       (sheetpath (names /) (tstamps /))
       (tstamp 56F9B9D6))
@@ -182,6 +216,8 @@
       (value 1K)
       (footprint Resistors_SMD:R_0603)
       (datasheet ERJ-3EKF1001V)
+      (fields
+        (field (name "Part Number") ERJ-3EKF1001V))
       (libsource (lib device) (part R))
       (sheetpath (names /) (tstamps /))
       (tstamp 56F9BB23))
@@ -189,12 +225,17 @@
       (value 2N7002L)
       (footprint TO_SOT_Packages_SMD:SOT-23)
       (datasheet http://www.mouser.com/ds/2/308/2N7002L-D-105484.pdf)
+      (fields
+        (field (name "Part Number") 2N7002L))
       (libsource (lib device) (part Q_NMOS_GSD))
       (sheetpath (names /) (tstamps /))
       (tstamp 56F9BBDF))
     (comp (ref D1)
       (value LED)
       (footprint LEDs:LED_0805)
+      (datasheet "LS Q976-NR-1")
+      (fields
+        (field (name "Part Number") "LS Q976-NR-1"))
       (libsource (lib device) (part LED))
       (sheetpath (names /) (tstamps /))
       (tstamp 56F9C213))
@@ -202,6 +243,8 @@
       (value 4.7uF)
       (footprint Capacitors_SMD:C_0805)
       (datasheet VJ0805G475KXYTW1BC)
+      (fields
+        (field (name "Part Number") VJ0805G475KXYTW1BC))
       (libsource (lib device) (part C))
       (sheetpath (names /) (tstamps /))
       (tstamp 56F9D3A5))
@@ -209,6 +252,8 @@
       (value 1K)
       (footprint Resistors_SMD:R_0603)
       (datasheet ERJ-3EKF1001V)
+      (fields
+        (field (name "Part Number") ERJ-3EKF1001V))
       (libsource (lib device) (part R))
       (sheetpath (names /) (tstamps /))
       (tstamp 56F9E9E6))
@@ -216,6 +261,8 @@
       (value BLM18PG330SN1D)
       (footprint Resistors_SMD:R_0603)
       (datasheet http://www.murata.com/~/media/webrenewal/support/library/catalog/products/emc/emifil/c31e.ashx?la=en-us)
+      (fields
+        (field (name "Part Number") BLM18PG330SN1D))
       (libsource (lib garage-opener-cache) (part BK0603HS330-T))
       (sheetpath (names /) (tstamps /))
       (tstamp 56F9B146))
@@ -223,6 +270,8 @@
       (value FT230XS)
       (footprint Housings_SSOP:SSOP-16_3.9x4.9mm_Pitch0.635mm)
       (datasheet http://www.mouser.com/ds/2/163/DS_FT230X-5395.pdf)
+      (fields
+        (field (name "Part Number") FT230XS))
       (libsource (lib ftdi) (part FT230XS))
       (sheetpath (names /) (tstamps /))
       (tstamp 56F9B71F))
@@ -230,6 +279,8 @@
       (value 1k)
       (footprint Resistors_SMD:R_0603)
       (datasheet ERJ-3EKF1001V)
+      (fields
+        (field (name "Part Number") ERJ-3EKF1001V))
       (libsource (lib device) (part R))
       (sheetpath (names /) (tstamps /))
       (tstamp 56F9BC4E))
@@ -237,6 +288,8 @@
       (value 1k)
       (footprint Resistors_SMD:R_0603)
       (datasheet ERJ-3EKF1001V)
+      (fields
+        (field (name "Part Number") ERJ-3EKF1001V))
       (libsource (lib device) (part R))
       (sheetpath (names /) (tstamps /))
       (tstamp 56F9C394))
@@ -244,6 +297,8 @@
       (value 1k)
       (footprint Resistors_SMD:R_0603)
       (datasheet ERJ-3EKF1001V)
+      (fields
+        (field (name "Part Number") ERJ-3EKF1001V))
       (libsource (lib device) (part R))
       (sheetpath (names /) (tstamps /))
       (tstamp 56F9C4FE))
@@ -251,24 +306,35 @@
       (value 1k)
       (footprint Resistors_SMD:R_0603)
       (datasheet ERJ-3EKF1001V)
+      (fields
+        (field (name "Part Number") ERJ-3EKF1001V))
       (libsource (lib device) (part R))
       (sheetpath (names /) (tstamps /))
       (tstamp 56F9C596))
     (comp (ref D2)
       (value LED)
       (footprint LEDs:LED_0805)
+      (datasheet "LS Q976-NR-1")
+      (fields
+        (field (name "Part Number") "LS Q976-NR-1"))
       (libsource (lib device) (part LED))
       (sheetpath (names /) (tstamps /))
       (tstamp 56F9CDB3))
     (comp (ref D3)
       (value LED)
       (footprint LEDs:LED_0805)
+      (datasheet "LS Q976-NR-1")
+      (fields
+        (field (name "Part Number") "LS Q976-NR-1"))
       (libsource (lib device) (part LED))
       (sheetpath (names /) (tstamps /))
       (tstamp 56F9D4AC))
     (comp (ref D5)
       (value LED)
       (footprint LEDs:LED_0805)
+      (datasheet "LS Q976-NR-1")
+      (fields
+        (field (name "Part Number") "LS Q976-NR-1"))
       (libsource (lib device) (part LED))
       (sheetpath (names /) (tstamps /))
       (tstamp 56F9D5ED))
@@ -276,6 +342,8 @@
       (value 27R)
       (footprint Resistors_SMD:R_0603)
       (datasheet ERJ-3GEYJ270V)
+      (fields
+        (field (name "Part Number") ERJ-3GEYJ270V))
       (libsource (lib device) (part R))
       (sheetpath (names /) (tstamps /))
       (tstamp 56F9F663))
@@ -283,6 +351,8 @@
       (value 27R)
       (footprint Resistors_SMD:R_0603)
       (datasheet ERJ-3GEYJ270V)
+      (fields
+        (field (name "Part Number") ERJ-3GEYJ270V))
       (libsource (lib device) (part R))
       (sheetpath (names /) (tstamps /))
       (tstamp 56F9FAE7))
@@ -290,6 +360,8 @@
       (value 47pf)
       (footprint Capacitors_SMD:C_0603)
       (datasheet VJ0603A470JXACW1BC)
+      (fields
+        (field (name "Part Number") VJ0603A470JXACW1BC))
       (libsource (lib device) (part C))
       (sheetpath (names /) (tstamps /))
       (tstamp 56FA03F1))
@@ -297,6 +369,8 @@
       (value 47pf)
       (footprint Capacitors_SMD:C_0603)
       (datasheet VJ0603A470JXACW1BC)
+      (fields
+        (field (name "Part Number") VJ0603A470JXACW1BC))
       (libsource (lib device) (part C))
       (sheetpath (names /) (tstamps /))
       (tstamp 56FA08C5))
@@ -304,6 +378,8 @@
       (value Si7055-A20-IM)
       (footprint Housings_DFN_QFN:DFN-6-1EP_3x3mm_Pitch0.95mm)
       (datasheet http://www.mouser.com/ds/2/368/Si7050-1-3-4-5-A20-907443.pdf)
+      (fields
+        (field (name "Part Number") Si7055-A20-IM))
       (libsource (lib glass-break-cache) (part Si7055-A20-IM))
       (sheetpath (names /) (tstamps /))
       (tstamp 56FAE08E))
@@ -325,6 +401,8 @@
       (value TSL2581FN)
       (footprint Housings_DFN_QFN:DFN-6-1EP_2x2mm_Pitch0.65mm)
       (datasheet http://www.mouser.com/ds/2/588/TSL2581TSL2583-519228.pdf)
+      (fields
+        (field (name "Part Number") TSL2581FN))
       (libsource (lib glass-break-cache) (part TSL2581FN))
       (sheetpath (names /) (tstamps /))
       (tstamp 56FAC6F7))
@@ -346,6 +424,8 @@
       (value 4.7uf)
       (footprint Capacitors_SMD:C_0805)
       (datasheet VJ0805G475KXYTW1BC)
+      (fields
+        (field (name "Part Number") VJ0805G475KXYTW1BC))
       (libsource (lib device) (part C))
       (sheetpath (names /) (tstamps /))
       (tstamp 56C6600B))
@@ -353,6 +433,8 @@
       (value 47pf)
       (footprint Capacitors_SMD:C_0603)
       (datasheet VJ0603A470JXACW1BC)
+      (fields
+        (field (name "Part Number") VJ0603A470JXACW1BC))
       (libsource (lib device) (part C))
       (sheetpath (names /) (tstamps /))
       (tstamp 56FE5D38))
@@ -360,6 +442,8 @@
       (value 47pf)
       (footprint Capacitors_SMD:C_0603)
       (datasheet VJ0603A470JXACW1BC)
+      (fields
+        (field (name "Part Number") VJ0603A470JXACW1BC))
       (libsource (lib device) (part C))
       (sheetpath (names /) (tstamps /))
       (tstamp 56FE5E13)))
