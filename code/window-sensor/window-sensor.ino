@@ -408,8 +408,8 @@ void get_token() {
   strcat(token_req, token);
   strcat(token_req, "\", \"cmd\":");
   strcat(token_req, "\"tok_req\" }");
-  Serial.println(token_req);
   if (isConnected) {
+    Serial.println(token_req);    
     webSocket.sendTXT(token_req);
   }
 }
@@ -481,7 +481,6 @@ void loop() {
       }      
     }
   } else {
-    //delay(1000);
     get_token();
   }
 

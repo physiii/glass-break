@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <export version="D">
   <design>
-    <source>/home/physiii/circuits/window-sensor/hardware/glass-break.sch</source>
-    <date>Thu 31 Mar 2016 12:46:34 PM CDT</date>
+    <source>/home/physiii/circuits/window-sensor/hardware/window-sensor.sch</source>
+    <date>Thu 31 Mar 2016 09:00:26 PM CDT</date>
     <tool>Eeschema 4.0.2-4+6225~38~ubuntu15.10.1-stable</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -10,7 +10,7 @@
         <company/>
         <rev/>
         <date/>
-        <source>glass-break.sch</source>
+        <source>window-sensor.sch</source>
         <comment number="1" value=""/>
         <comment number="2" value=""/>
         <comment number="3" value=""/>
@@ -476,7 +476,7 @@
       <fields>
         <field name="Part Number">Si7055-A20-IM</field>
       </fields>
-      <libsource lib="glass-break-cache" part="Si7055-A20-IM"/>
+      <libsource lib="window-sensor-cache" part="Si7055-A20-IM"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56FAE08E</tstamp>
     </comp>
@@ -509,7 +509,7 @@
       <fields>
         <field name="Part Number">TSL2581FN</field>
       </fields>
-      <libsource lib="glass-break-cache" part="TSL2581FN"/>
+      <libsource lib="window-sensor-cache" part="TSL2581FN"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamp>56FAC6F7</tstamp>
     </comp>
@@ -805,7 +805,7 @@
         <pin num="2" name="2" type="passive"/>
       </pins>
     </libpart>
-    <libpart lib="glass-break-cache" part="Si7055-A20-IM">
+    <libpart lib="window-sensor-cache" part="Si7055-A20-IM">
       <fields>
         <field name="Reference">U</field>
         <field name="Value">Si7055-A20-IM</field>
@@ -817,7 +817,7 @@
         <pin num="6" name="SCL" type="input"/>
       </pins>
     </libpart>
-    <libpart lib="glass-break-cache" part="TSL2581FN">
+    <libpart lib="window-sensor-cache" part="TSL2581FN">
       <fields>
         <field name="Reference">U</field>
         <field name="Value">TSL2581FN</field>
@@ -877,26 +877,26 @@
     </libpart>
   </libparts>
   <libraries>
-    <library logical="garage-opener-cache">
-      <uri>/home/physiii/circuits/garage-opener/hardware/garage-opener-cache.lib</uri>
-    </library>
-    <library logical="glass-break-cache">
-      <uri>/home/physiii/circuits/window-sensor/hardware/glass-break-cache.lib</uri>
-    </library>
     <library logical="device">
       <uri>/usr/share/kicad/library/device.lib</uri>
-    </library>
-    <library logical="glass-break">
-      <uri>/home/physiii/circuits/window-sensor/hardware/glass-break.lib</uri>
-    </library>
-    <library logical="ftdi">
-      <uri>/usr/share/kicad/library/ftdi.lib</uri>
     </library>
     <library logical="conn">
       <uri>/usr/share/kicad/library/conn.lib</uri>
     </library>
     <library logical="linear">
       <uri>/usr/share/kicad/library/linear.lib</uri>
+    </library>
+    <library logical="glass-break">
+      <uri>/home/physiii/circuits/garage-opener/hardware/glass-break.lib</uri>
+    </library>
+    <library logical="ftdi">
+      <uri>/usr/share/kicad/library/ftdi.lib</uri>
+    </library>
+    <library logical="garage-opener-cache">
+      <uri>/home/physiii/circuits/garage-opener/hardware/garage-opener-cache.lib</uri>
+    </library>
+    <library logical="window-sensor-cache">
+      <uri>/home/physiii/circuits/window-sensor/hardware/window-sensor-cache.lib</uri>
     </library>
   </libraries>
   <nets>
